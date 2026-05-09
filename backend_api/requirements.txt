@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+chromadb
+sentence-transformers
+yt-dlp
+google-generativeai
+youtube-transcript-api
+python-dotenv
