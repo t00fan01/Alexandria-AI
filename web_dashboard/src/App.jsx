@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { 
-  BookOpen, 
-  Video, 
-  FileText, 
-  Layers, 
-  Play, 
-  Upload, 
-  Search, 
+import {
+  BookOpen,
+  Video,
+  FileText,
+  Layers,
+  Play,
+  Upload,
+  Search,
   Sparkles,
   ArrowRight,
   Send,
@@ -55,7 +55,7 @@ function App() {
     setIsLoading(true);
     setErrorMsg(null);
     try {
-      const res = await fetch('http://localhost:8000/ingest', {
+      const res = await fetch('https://alexandria-ai-1ppc.onrender.com/ingest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video_url: youtubeUrl.trim() })
@@ -76,35 +76,35 @@ function App() {
 
   const handleAsk = async () => {
     if (!questionInput.trim() || !videoId) return;
-    
+
     const userQ = questionInput.trim();
     setQuestionInput('');
     setChatHistory(prev => [...prev, { sender: 'user', text: userQ }]);
-    
+
     // Add empty placeholder for AI response
     setChatHistory(prev => [...prev, { sender: 'ai', text: '' }]);
-    
+
     try {
-      const res = await fetch('http://localhost:8000/ask/stream', {
+      const res = await fetch('https://alexandria-ai-1ppc.onrender.com/ask/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video_id: videoId, question: userQ })
       });
-      
+
       if (!res.ok) {
         throw new Error('Failed to fetch response');
       }
-      
+
       const reader = res.body.getReader();
       const decoder = new TextDecoder('utf-8');
-      
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
+
         const chunkStr = decoder.decode(value, { stream: true });
         const lines = chunkStr.split('\n');
-        
+
         for (const line of lines) {
           if (!line.trim()) continue;
           try {
@@ -132,7 +132,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-orange-50 font-sans text-slate-900 selection:bg-blue-200 relative">
-      
+
       {/* Global Toast */}
       {toastMsg && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-3 bg-slate-800 text-white rounded-full text-sm font-medium shadow-lg animate-in slide-in-from-top-4 fade-in duration-300">
@@ -149,13 +149,13 @@ function App() {
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900">VidyaSync</span>
         </div>
-        
+
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
           <a href="#platform" onClick={(e) => handleNavClick(e, 'Platform')} className="hover:text-slate-900 transition-colors">Platform</a>
           <a href="#solutions" onClick={(e) => handleNavClick(e, 'Solutions')} className="hover:text-slate-900 transition-colors">Solutions</a>
           <a href="#pricing" onClick={(e) => handleNavClick(e, 'Pricing')} className="hover:text-slate-900 transition-colors">Pricing</a>
         </div>
-        
+
         <button onClick={handleStartBuilding} className="hidden md:flex px-5 py-2.5 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm">
           Start Building
         </button>
@@ -163,7 +163,7 @@ function App() {
 
       {/* Hero Section */}
       <main className="max-w-5xl mx-auto px-6 pt-16 pb-24 text-center flex flex-col items-center">
-        
+
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-slate-200/60 shadow-sm backdrop-blur-sm text-sm font-medium text-slate-600 mb-8">
           <Sparkles className="w-4 h-4 text-orange-500" />
@@ -177,7 +177,7 @@ function App() {
             Interactive AI
           </span>
         </h1>
-        
+
         <p className="max-w-2xl text-lg md:text-xl text-slate-500 mb-10 leading-relaxed">
           Transform static lectures into dynamic, conversational experiences. Paste any YouTube link or upload your materials, and let VidyaSync build your personalized AI tutor instantly.
         </p>
@@ -204,22 +204,22 @@ function App() {
 
         {/* Core Inputs */}
         <div className="w-full max-w-3xl flex flex-col gap-4 text-left">
-          
+
           {/* YouTube Input Bar */}
           <div className="relative group flex items-center bg-white rounded-full p-2 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
             <div className="pl-4 pr-2 text-slate-400">
               <Play className="w-5 h-5" />
             </div>
-            <input 
+            <input
               ref={youtubeInputRef}
-              type="text" 
+              type="text"
               value={youtubeUrl}
               onChange={(e) => setYoutubeUrl(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
-              placeholder="Paste YouTube URL or lecture link..." 
+              placeholder="Paste YouTube URL or lecture link..."
               className="flex-1 bg-transparent border-none outline-none text-slate-700 placeholder:text-slate-400 text-base min-w-0"
             />
-            <button 
+            <button
               onClick={handleAnalyze}
               disabled={isLoading || !youtubeUrl.trim()}
               className="px-6 py-3 rounded-full bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition-colors flex items-center gap-2 shrink-0 disabled:opacity-70 disabled:cursor-not-allowed"
@@ -247,15 +247,15 @@ function App() {
           )}
 
           {/* Drag and Drop Zone */}
-          <div 
+          <div
             onClick={() => fileInputRef.current?.click()}
             className="w-full border-2 border-dashed border-slate-300 rounded-2xl bg-white/50 backdrop-blur-sm p-8 flex flex-col items-center justify-center gap-3 transition-colors hover:bg-white hover:border-blue-300 cursor-pointer mt-2"
           >
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              onChange={handleFileUpload} 
-              className="hidden" 
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileUpload}
+              className="hidden"
               accept=".pdf,.png,.jpg,.jpeg"
             />
             <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-1">
@@ -276,7 +276,7 @@ function App() {
           /* Skeleton Container */
           <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-3xl bg-white/40 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl overflow-hidden flex flex-col items-center justify-center relative transition-all duration-500">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-            
+
             <div className="w-16 h-16 rounded-2xl bg-white/80 shadow-sm flex items-center justify-center mb-4 relative z-10 border border-slate-100">
               <Video className="w-8 h-8 text-slate-300" />
             </div>
@@ -288,22 +288,22 @@ function App() {
         ) : (
           /* Active Workspace */
           <div className="w-full h-[600px] rounded-3xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-200 overflow-hidden flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-500">
-            
+
             {/* Video Player Area */}
             <div className="flex-1 bg-slate-950 flex items-center justify-center border-b md:border-b-0 md:border-r border-slate-200 relative group">
-              <iframe 
+              <iframe
                 className="absolute inset-0 w-full h-full"
                 src={`https://www.youtube.com/embed/${videoId}`}
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen>
               </iframe>
             </div>
 
             {/* Chat Sidebar Area */}
             <div className="w-full md:w-[400px] bg-slate-50 flex flex-col h-[400px] md:h-full">
-              
+
               {/* Chat Header */}
               <div className="p-4 border-b border-slate-200 bg-white flex items-center gap-2 shadow-sm z-10 shrink-0">
                 <Sparkles className="w-5 h-5 text-indigo-500" />
@@ -313,13 +313,12 @@ function App() {
               {/* Chat History */}
               <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
                 {chatHistory.map((msg, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`max-w-[85%] rounded-2xl p-3 text-[15px] leading-relaxed shadow-sm ${
-                      msg.sender === 'user' 
-                        ? 'bg-blue-600 text-white self-end rounded-tr-sm' 
+                  <div
+                    key={idx}
+                    className={`max-w-[85%] rounded-2xl p-3 text-[15px] leading-relaxed shadow-sm ${msg.sender === 'user'
+                        ? 'bg-blue-600 text-white self-end rounded-tr-sm'
                         : 'bg-white border border-slate-200 text-slate-700 self-start rounded-tl-sm'
-                    }`}
+                      }`}
                   >
                     {msg.text}
                   </div>
@@ -329,15 +328,15 @@ function App() {
               {/* Chat Input */}
               <div className="p-4 bg-white border-t border-slate-200 shrink-0">
                 <div className="relative flex items-center">
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={questionInput}
                     onChange={(e) => setQuestionInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleAsk()}
-                    placeholder="Ask a question about the lecture..." 
+                    placeholder="Ask a question about the lecture..."
                     className="w-full bg-slate-50 border border-slate-200 rounded-full pl-4 pr-12 py-3 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                   />
-                  <button 
+                  <button
                     onClick={handleAsk}
                     disabled={!questionInput.trim()}
                     className="absolute right-2 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"

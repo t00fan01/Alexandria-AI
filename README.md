@@ -125,6 +125,7 @@ npm run dev
 ```
 
 The app will be available at `http://localhost:5173`
+or https://alexandria-ai-1ppc.onrender.com
 
 ---
 
