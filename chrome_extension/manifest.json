@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "VidyaSync",
+  "version": "1.0",
+  "description": "Your Ultimate AI Learning Companion",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "http://localhost:8000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ]
+}

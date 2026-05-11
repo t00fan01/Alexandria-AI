@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VidyaSync Popup</title>
+  <style>
+    :root {
+      --bg-color: #020617;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --indigo-500: #6366f1;
+      --indigo-shadow: rgba(99, 102, 241, 0.5);
+      --green-400: #4ade80;
+      --green-500: #22c55e;
+      --green-bg: rgba(34, 197, 94, 0.1);
+      --green-border: rgba(34, 197, 94, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 256px;
+      padding: 24px;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      border: 1px solid var(--border-color);
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .icon-wrapper {
+      width: 56px;
+      height: 56px;
+      background-color: var(--indigo-500);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px var(--indigo-shadow);
+    }
+
+    .icon-wrapper svg {
+      width: 32px;
+      height: 32px;
+      color: #ffffff;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-wrapper {
+      margin-top: 8px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background-color: var(--green-bg);
+      border: 1px solid var(--green-border);
+      border-radius: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--green-500);
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .status-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--green-400);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: .5;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon-wrapper">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+      </svg>
+    </div>
+    
+    <div class="text-center">
+      <h1 class="title">VidyaSync</h1>
+      <p class="subtitle">AI Learning Companion</p>
+    </div>
+
+    <div class="status-wrapper">
+      <div class="status-dot"></div>
+      <span class="status-text">VidyaSync Active</span>
+    </div>
+  </div>
+</body>
+</html>

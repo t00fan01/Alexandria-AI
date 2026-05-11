@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ─── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
@@ -60,3 +61,19 @@ backend/data/
 
 # ─── Package manager ──────────────────────────────────────────────────────────
 # Keep package-lock.json for reproducibility
+=======
+# Node
+node_modules/
+dist/
+build/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# DB
+chroma_db/
+>>>>>>> dd357c844405ed81340c5d60ad8e1a7afbd9a7ae
