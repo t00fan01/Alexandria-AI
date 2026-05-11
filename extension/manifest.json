@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Alexandria Summarizer",
+    "version": "1.0",
+    "description": "Send YouTube videos to local Alexandria API.",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Summarize this video"
+    }
+}
