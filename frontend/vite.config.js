@@ -18,10 +18,14 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          lucide: ['lucide-react'],
-        },
+        // Updated to use the required function syntax
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('lucide-react')) return 'lucide';
+            if (id.includes('react') || id.includes('react-dom')) return 'react';
+            return 'vendor';
+          }
+        }
       },
     },
   },
