@@ -368,7 +368,7 @@ export default function SummaryDashboard({ videoId, onTimestampClick, isProcessi
       </div>
 
       <section className="fade-in" style={{ animationDelay: '0.3s' }}>
-         <QuizPanel videoId={videoId} onTimestampClick={onTimestampClick} />
+         <QuizPanel videoId={videoId} onTimestampClick={onTimestampClick} isProcessing={isProcessing} />
       </section>
 
       <PdfTemplate 

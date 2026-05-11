@@ -50,36 +50,35 @@ export default function Timeline({ videoId, onTimestampClick, isProcessing = fal
     return null; // Don't show timeline if no video or no timestamps
   }
 
-  if (isProcessing && timestamps.length === 0) {
-    return (
-      <div className="glass-panel" style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', marginBottom: '0.25rem', fontFamily: 'Literata, serif', color: 'var(--primary)' }}>
-          <Clock size={18} color="var(--primary)" /> Video Chapters
-        </h3>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-secondary)' }}>
-          <Loader2 size={18} className="animate-spin" />
-          <span>Building chapters as the transcript finishes processing...</span>
+  if (timestamps.length === 0 || (isProcessing && timestamps.length === 1 && timestamps[0].time === 0)) {
+    if (isProcessing) {
+      return (
+        <div className="glass-panel" style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', marginBottom: '0.25rem', fontFamily: 'Literata, serif', color: 'var(--primary)' }}>
+            <Clock size={18} color="var(--primary)" /> Video Chapters
+          </h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-secondary)' }}>
+            <Loader2 size={18} className="animate-spin" />
+            <span>Building chapters as the transcript finishes processing...</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.75rem' }}>
+            <div className="skeleton-card" style={{ padding: '0.85rem', minHeight: '72px' }}>
+              <div className="skeleton skeleton-line" style={{ width: '48%', marginBottom: '0.6rem' }} />
+              <div className="skeleton skeleton-line" style={{ width: '86%' }} />
+            </div>
+            <div className="skeleton-card" style={{ padding: '0.85rem', minHeight: '72px' }}>
+              <div className="skeleton skeleton-line" style={{ width: '42%', marginBottom: '0.6rem' }} />
+              <div className="skeleton skeleton-line" style={{ width: '78%' }} />
+            </div>
+            <div className="skeleton-card" style={{ padding: '0.85rem', minHeight: '72px' }}>
+              <div className="skeleton skeleton-line" style={{ width: '52%', marginBottom: '0.6rem' }} />
+              <div className="skeleton skeleton-line" style={{ width: '68%' }} />
+            </div>
+          </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.75rem' }}>
-          <div className="skeleton-card" style={{ padding: '0.85rem', minHeight: '72px' }}>
-            <div className="skeleton skeleton-line" style={{ width: '48%', marginBottom: '0.6rem' }} />
-            <div className="skeleton skeleton-line" style={{ width: '86%' }} />
-          </div>
-          <div className="skeleton-card" style={{ padding: '0.85rem', minHeight: '72px' }}>
-            <div className="skeleton skeleton-line" style={{ width: '42%', marginBottom: '0.6rem' }} />
-            <div className="skeleton skeleton-line" style={{ width: '78%' }} />
-          </div>
-          <div className="skeleton-card" style={{ padding: '0.85rem', minHeight: '72px' }}>
-            <div className="skeleton skeleton-line" style={{ width: '52%', marginBottom: '0.6rem' }} />
-            <div className="skeleton skeleton-line" style={{ width: '68%' }} />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (timestamps.length === 0) {
-    return null; // Don't show timeline if no video or no timestamps
+      );
+    }
+    return null;
   }
 
   const formatTime = (seconds) => {

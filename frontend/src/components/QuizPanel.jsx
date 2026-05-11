@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Loader2, CheckCircle, XCircle, PlayCircle, RefreshCw, ChevronRight, Clock, Target } from 'lucide-react';
 import { getQuiz } from '../api/client';
 
-export default function QuizPanel({ videoId, onTimestampClick }) {
+export default function QuizPanel({ videoId, onTimestampClick, isProcessing = false }) {
   const [quizData, setQuizData] = useState(null);
   const [activeQuizData, setActiveQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,9 @@ export default function QuizPanel({ videoId, onTimestampClick }) {
       }
     } catch (err) {
       let errorMsg = err.message || 'Failed to generate quiz.';
-      if (errorMsg.toLowerCase().includes('quota') || errorMsg.includes('429')) {
+      if (isProcessing) {
+        errorMsg = 'Transcript is still being processed. Please wait a moment...';
+      } else if (errorMsg.toLowerCase().includes('quota') || errorMsg.includes('429')) {
         errorMsg = 'Gemini API quota exceeded. Please try again later or check your API keys.';
       } else if (errorMsg.length > 150) {
         errorMsg = 'An error occurred while generating the quiz. Please try again.';
