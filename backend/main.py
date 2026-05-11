@@ -228,7 +228,7 @@ def _run_ingest_file_job(job_id: str, video_id: str, file_bytes: bytes, file_nam
 def root():
     return {
         "message": "AI Learning Companion backend is running",
-        "docs": "http://localhost:8000/docs",
+        "docs": "https://alexandria-ai-1ppc.onrender.com",
         "features": [
             "Contextual Q&A from video transcripts",
             "Smart summaries (overall, topic-wise, last 5 minutes)",

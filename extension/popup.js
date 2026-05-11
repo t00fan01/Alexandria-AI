@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 1. Kick off the heavy processing job
-            const ingestResponse = await fetch('http://localhost:8000/ingest', {
+            const ingestResponse = await fetch('https://alexandria-ai-1ppc.onrender.com/ingest', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ video_url: cleanUrl })
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 attempts++;
 
                 try {
-                    const sumRes = await fetch(`http://localhost:8000/summary/${videoId}`);
+                    const sumRes = await fetch(`https://alexandria-ai-1ppc.onrender.com/summary/${videoId}`);
 
                     if (sumRes.ok) {
                         const data = await sumRes.json();

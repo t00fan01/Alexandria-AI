@@ -5,7 +5,7 @@ let isSidebarInjected = false;
 
 function injectSidebar() {
   if (isSidebarInjected) return;
-  
+
   const sidebarHTML = `
     <div id="vidyasync-sidebar" class="vidyasync-sidebar">
       <div class="vidyasync-header">
@@ -36,48 +36,48 @@ function injectSidebar() {
       </div>
     </div>
   `;
-  
+
   document.body.insertAdjacentHTML('beforeend', sidebarHTML);
   isSidebarInjected = true;
-  
+
   document.getElementById('vidyasync-close').addEventListener('click', () => {
     document.getElementById('vidyasync-sidebar').classList.remove('open');
   });
 
   const input = document.getElementById('vidyasync-input');
   const sendBtn = document.getElementById('vidyasync-send');
-  
+
   const sendMessage = async () => {
     const question = input.value.trim();
     if (!question || !currentVideoId) return;
-    
+
     appendMessage(question, 'user');
     input.value = '';
-    
+
     const aiMsgId = 'msg-' + Date.now();
     appendMessage('...', 'ai', aiMsgId);
     const aiMsgEl = document.getElementById(aiMsgId);
-    
+
     try {
-      const response = await fetch('http://localhost:8000/ask/stream', {
+      const response = await fetch('https://alexandria-ai-1ppc.onrender.com/ask/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video_id: currentVideoId, question: question })
       });
-      
+
       if (!response.ok) throw new Error('Network response was not ok');
-      
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
       aiMsgEl.textContent = '';
-      
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
+
         const chunk = decoder.decode(value, { stream: true });
         const lines = chunk.split('\n\n');
-        
+
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             try {
@@ -97,7 +97,7 @@ function injectSidebar() {
       console.error('VidyaSync Error:', err);
     }
   };
-  
+
   sendBtn.addEventListener('click', sendMessage);
   input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') sendMessage();
@@ -114,7 +114,7 @@ function injectSidebar() {
       const ctx = canvas.getContext('2d');
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       const dataUrl = canvas.toDataURL('image/jpeg');
-      
+
       const chatArea = document.getElementById('vidyasync-chat');
       const msgEl = document.createElement('div');
       msgEl.className = 'vidyasync-msg user';
@@ -151,27 +151,27 @@ async function handleSyncClick() {
   injectSidebar();
   const sidebar = document.getElementById('vidyasync-sidebar');
   sidebar.classList.add('open');
-  
+
   const videoUrl = window.location.href;
   updateStatus('Analyzing Lecture...', '#f59e0b'); // amber
-  
+
   try {
-    const response = await fetch('http://localhost:8000/ingest', {
+    const response = await fetch('https://alexandria-ai-1ppc.onrender.com/ingest', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ video_url: videoUrl })
     });
-    
+
     const data = await response.json();
     if (data.status === 'success') {
       currentVideoId = data.video_id;
       updateStatus('Synced & Ready', '#10b981'); // green
       document.getElementById('vidyasync-input').disabled = false;
       document.getElementById('vidyasync-send').disabled = false;
-      
+
       const chatArea = document.getElementById('vidyasync-chat');
       if (chatArea.children.length === 1) chatArea.innerHTML = '';
-      
+
       appendMessage('Lecture synced! What are your doubts?', 'ai');
     } else {
       updateStatus('Sync Failed', '#ef4444'); // red
@@ -179,14 +179,14 @@ async function handleSyncClick() {
     }
   } catch (err) {
     updateStatus('Connection Error', '#ef4444');
-    appendMessage('Error: Could not reach backend server at localhost:8000.', 'ai');
+    appendMessage('Error: Could not reach backend server at https://alexandria-ai-1ppc.onrender.com.', 'ai');
     console.error('VidyaSync Error:', err);
   }
 }
 
 function injectButton() {
   const titleContainer = document.querySelector('h1.ytd-watch-metadata');
-  
+
   if (titleContainer && !document.getElementById('vidyasync-sync-btn')) {
     const btn = document.createElement('button');
     btn.id = 'vidyasync-sync-btn';
@@ -195,7 +195,7 @@ function injectButton() {
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path></svg>
       Sync with VidyaSync
     `;
-    
+
     // Insert into the title element
     titleContainer.appendChild(btn);
     btn.addEventListener('click', handleSyncClick);
