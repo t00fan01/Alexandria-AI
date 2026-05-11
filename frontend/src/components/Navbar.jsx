@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export default function Navbar() {
   return (
@@ -19,7 +19,7 @@ export default function Navbar() {
       zIndex: 100
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <Leaf size={28} color="var(--primary)" />
+        <img src={logo} alt="Alexandria Logo" style={{ height: '36px', width: 'auto' }} />
         <span className="font-display" style={{ fontSize: '1.5rem', color: 'var(--primary)', fontWeight: 700 }}>Alexandria</span>
       </div>
 

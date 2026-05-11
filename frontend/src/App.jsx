@@ -6,6 +6,7 @@ import VideoPlayer from './components/VideoPlayer';
 import ChatPanel from './components/ChatPanel';
 import SummaryDashboard from './components/SummaryDashboard';
 import Timeline from './components/Timeline';
+import logo from './assets/logo.png';
 import './index.css';
 
 function App() {
@@ -244,7 +245,10 @@ function App() {
         alignItems: 'center',
         marginTop: '6rem'
       }}>
-        <div className="font-display" style={{ fontSize: '1.2rem', italic: true }}>Alexandria</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <img src={logo} alt="Alexandria Logo" style={{ height: '24px', opacity: 0.8 }} />
+          <div className="font-display" style={{ fontSize: '1.2rem', fontStyle: 'italic' }}>Alexandria</div>
+        </div>
         <div className="footer-links" style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem' }}>
           <span>Privacy Policy</span>
           <span>Terms of Service</span>
