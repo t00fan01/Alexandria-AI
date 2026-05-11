@@ -9,6 +9,12 @@ services:
         sync: false
       - key: ASSEMBLYAI_API_KEY
         sync: false
+      - key: ENABLE_GEMINI
+        value: "1"
+      - key: ENABLE_CHROMA
+        value: "1"
+      - key: ENABLE_EMBEDDINGS
+        value: "1"
       - key: PYTHON_VERSION
         value: 3.11.0
 

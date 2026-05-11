@@ -23,12 +23,15 @@ def _get_api_key() -> str | None:
 def heavy_ai_enabled() -> bool:
     value = os.getenv("ENABLE_GEMINI")
     if value is None:
-        return False
+        return True # Default to true if key is present
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 def gemini_available() -> bool:
-    return bool(_get_api_key()) and heavy_ai_enabled() and _get_genai() is not None
+    has_key = bool(_get_api_key())
+    is_enabled = heavy_ai_enabled()
+    has_module = _get_genai() is not None
+    return has_key and is_enabled and has_module
 
 
 def _configure_model():
@@ -37,7 +40,7 @@ def _configure_model():
     if not genai_module or not api_key:
         return None
     genai_module.configure(api_key=api_key)
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
     return genai_module.GenerativeModel(model_name)
 
 

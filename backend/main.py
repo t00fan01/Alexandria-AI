@@ -23,10 +23,25 @@ from .utils.transcript_store import get_chunks
 from .utils.quick_summary import generate_quick_summary, is_gemini_error
 
 app = FastAPI(
-    title="AI Learning Companion",
+    title="Alexandria AI Learning Companion",
     description="RAG-based video learning assistant for LMS",
     version="1.0.0"
 )
+
+@app.on_event("startup")
+async def startup_event():
+    print("Checking environment variables...")
+    if not os.getenv("GOOGLE_API_KEY"):
+        print("WARNING: GOOGLE_API_KEY is not set. Chatbot and Quiz features will be disabled or fail.")
+    else:
+        print("GOOGLE_API_KEY is set.")
+    if not os.getenv("ASSEMBLYAI_API_KEY"):
+        print("WARNING: ASSEMBLYAI_API_KEY is not set. AssemblyAI transcription fallback will be unavailable.")
+    else:
+        print("ASSEMBLYAI_API_KEY is set.")
+    print(f"ENABLE_GEMINI: {os.getenv('ENABLE_GEMINI')}")
+    print(f"ENABLE_CHROMA: {os.getenv('ENABLE_CHROMA')}")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
