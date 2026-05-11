@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://alexandria-ai-1ppc.onrender.com';
 
 async function parseResponse(response, fallbackMessage) {
   const result = await response.json().catch(() => ({}));
