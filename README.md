@@ -249,3 +249,8 @@ Stores processed content for retrieval
 Q&A + Guidance
 Final user-facing intelligence
 ---
+
+
+<div align="center">
+  Made with 🌿 by Team Lemon</a>
+</div>
