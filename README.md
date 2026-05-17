@@ -252,8 +252,5 @@ Final user-facing intelligence
 
 
 <div align="center">
-<<<<<<< HEAD
-  Made with 🌿 by Team Lemon
-=======
-  Made with 🌿 by Team Lemon</a>
+  Made by Team Lemon</a>
 </div>
