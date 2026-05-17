@@ -256,5 +256,4 @@ Final user-facing intelligence
   Made with 🌿 by Team Lemon
 =======
   Made with 🌿 by Team Lemon</a>
->>>>>>> 24a52244a16beeae461be84b04d7c7b16b56d6f6
 </div>
